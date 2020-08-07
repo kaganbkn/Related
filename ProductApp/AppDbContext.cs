@@ -15,32 +15,7 @@ namespace ProductApp
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Product>().HasData(
-                new Product
-                {
-                    ProductId = Guid.NewGuid(),
-                    Name = "Jean",
-                    Price = 10.3,
-                    Tags = new List<Tag>
-                    {
-                        new Tag
-                        {
-                            TagId = Guid.NewGuid(),
-                            Value = "blue"
-                        },
-
-                        new Tag
-                        {
-                            TagId = Guid.NewGuid(),
-                            Value = "32"
-                        }
-                    }
-                });
-        }
     }
 }

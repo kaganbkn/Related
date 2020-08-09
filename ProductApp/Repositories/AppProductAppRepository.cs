@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
 using ProductApp.Entities;
 
 namespace ProductApp.Repositories
 {
-    public class AppProductAppRepository : IAppProductRepository
+    public class AppProductAppRepository : IAppProductRepository //todo: exclude isdeleted parameter for all
     {
         private readonly AppDbContext _context;
 
@@ -41,9 +42,40 @@ namespace ProductApp.Repositories
             return await _context.Products.FirstOrDefaultAsync(c => c.ProductId == productId);
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        public async Task<Tag> GetTagAsync(Guid tagId)
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Tags.FirstOrDefaultAsync(c => c.TagId == tagId);
+        }
+
+        public IQueryable<Product> GetAllProducts()
+        {
+            return _context.Products.Include(c=>c.Tags).AsQueryable();
+        }
+
+        public void DeleteProduct(Product product)
+        {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+
+            _context.Products.Remove(product);
+        }
+
+        public void DeleteTag(Tag tag)
+        {
+            if (tag == null)
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
+
+            _context.Tags.Remove(tag);
+        }
+
+        public async Task<List<Tag>> GetAllTagsByProductAsync(Guid productId)
+        {
+            var tags = await _context.Tags.Where(c => c.ProductId == productId).ToListAsync();
+            return tags;
         }
 
         public async Task<bool> SaveChangesAsync()

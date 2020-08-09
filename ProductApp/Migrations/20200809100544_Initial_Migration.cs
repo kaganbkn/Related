@@ -13,7 +13,8 @@ namespace ProductApp.Migrations
                 {
                     ProductId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false)
+                    Price = table.Column<double>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +27,8 @@ namespace ProductApp.Migrations
                 {
                     TagId = table.Column<Guid>(nullable: false),
                     Value = table.Column<string>(nullable: true),
-                    ProductId = table.Column<Guid>(nullable: true)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +38,7 @@ namespace ProductApp.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Configuration.Annotations;
 using AutoMapper.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProductApp.DataTransferObjects;
 using ProductApp.Repositories;
 
@@ -24,7 +27,7 @@ namespace ProductApp.Controllers
         }
 
         [HttpGet("productId", Name = "GetProduct")]
-        public async Task<Product> GetProduct(Guid productId)
+        public async Task<ProductOutputDto> GetProduct(Guid productId)
         {
             var product = await _appProductRepository.GetProductAsync(productId);
 
@@ -33,7 +36,34 @@ namespace ProductApp.Controllers
                 throw new ArgumentNullException(nameof(product)); // todo: add custom message
             }
 
-            return product; //todo: add dto
+            return _mapper.Map<ProductOutputDto>(product);
+        }
+
+        [HttpGet]
+        public List<ProductOutputDto> GetAllProduct([FromQuery] SearchParameters searchParameters)  //todo: removed async
+        {
+
+            var products = _appProductRepository.GetAllProducts();
+
+            if (!products.Any())
+            {
+                throw new ArgumentNullException(nameof(products)); // todo: add custom message //todo:add notfound
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchParameters.Name))
+            {
+                var name = searchParameters.Name.Trim();
+                products = products.Where(c => c.Name.Contains(name));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchParameters.Tag))
+            {
+                var tag = searchParameters.Tag.Trim();
+                products = products.Where(c => c.Tags.Any(t => t.Value.Contains(tag)));
+
+            }
+
+            return _mapper.Map<List<ProductOutputDto>>(products);
         }
 
         [HttpPost]
@@ -71,6 +101,23 @@ namespace ProductApp.Controllers
             await _appProductRepository.SaveChangesAsync();
             return CreatedAtRoute("GetProduct", productId, product);
 
+        }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProduct(Guid productId)  // todo:crud
+        {
+            var product = await _appProductRepository.GetProductAsync(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.IsDeleted = true;
+
+            await _appProductRepository.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

@@ -12,6 +12,10 @@ namespace ProductApp.Repositories
         void AddTag(Tag tag);
         Task<bool> SaveChangesAsync();
         Task<Product> GetProductAsync(Guid productId);
-        Task<List<Product>> GetAllProductsAsync();
+        Task<Tag> GetTagAsync(Guid tagId);
+        IQueryable<Product> GetAllProducts();
+        void DeleteProduct(Product product);
+        void DeleteTag(Tag tag);
+        Task<List<Tag>> GetAllTagsByProductAsync(Guid productId);
     }
 }

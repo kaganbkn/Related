@@ -15,6 +15,8 @@ namespace ProductApp
             CreateMap<ProductCreateDto, Product>();
             CreateMap<ProductUpdateDto, Product>();
             CreateMap<TagCreationDto, Tag>();
+            CreateMap<Tag, TagCreationDto>();
+            CreateMap<Product,ProductOutputDto>();
         }
     }
 }

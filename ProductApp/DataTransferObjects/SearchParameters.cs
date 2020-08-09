@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace ProductApp.DataTransferObjects
 {
-    public class ProductCreateDto
+    public class SearchParameters
     {
         public string Name { get; set; }
-        public double Price { get; set; }
-        public ICollection<TagCreationDto> Tags { get; set; } = new List<TagCreationDto>(); //todo: remove
-
+        public string Tag { get; set; }
     }
 }

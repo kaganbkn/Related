@@ -11,6 +11,7 @@ namespace ProductApp
         public Guid ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public ICollection<Tag> Tags { get; set; }=new List<Tag>();
+        public bool IsDeleted { get; set; }
     }
 }

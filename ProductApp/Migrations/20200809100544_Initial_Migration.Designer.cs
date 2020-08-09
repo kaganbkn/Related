@@ -10,7 +10,7 @@ using ProductApp;
 namespace ProductApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200807132349_Initial_Migration")]
+    [Migration("20200809100544_Initial_Migration")]
     partial class Initial_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,10 @@ namespace ProductApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Value")
@@ -46,6 +49,9 @@ namespace ProductApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -59,9 +65,11 @@ namespace ProductApp.Migrations
 
             modelBuilder.Entity("ProductApp.Entities.Tag", b =>
                 {
-                    b.HasOne("ProductApp.Product", null)
+                    b.HasOne("ProductApp.Product", "Product")
                         .WithMany("Tags")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

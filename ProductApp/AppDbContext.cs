@@ -17,5 +17,13 @@ namespace ProductApp
         public DbSet<Product> Products { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>().HasQueryFilter(c => !c.IsDeleted);
+            modelBuilder.Entity<Tag>().HasQueryFilter(c => !c.IsDeleted);
+            
+        }
     }
 }

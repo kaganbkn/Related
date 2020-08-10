@@ -36,7 +36,7 @@ namespace ProductApp.Controllers
                 throw new ArgumentNullException(nameof(product)); // todo: add custom message
             }
 
-            return _mapper.Map<ProductOutputDto>(product);
+            return _mapper.Map<ProductOutputDto>(product); //todo: remove isdeleted
         }
 
         [HttpGet]
@@ -82,8 +82,7 @@ namespace ProductApp.Controllers
 
             await _appProductRepository.SaveChangesAsync();
 
-
-            return Ok();
+            return CreatedAtRoute("GetProduct", product.ProductId, product);
         }
 
         [HttpPut("{productId}")]

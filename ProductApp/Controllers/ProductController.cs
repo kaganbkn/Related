@@ -26,7 +26,7 @@ namespace ProductApp.Controllers
             _appProductRepository = appProductRepository;
         }
 
-        [HttpGet("productId", Name = "GetProduct")]
+        [HttpGet("{productId}", Name = "GetProduct")]
         public async Task<ProductOutputDto> GetProduct(Guid productId)
         {
             var product = await _appProductRepository.GetProductAsync(productId);
@@ -82,7 +82,7 @@ namespace ProductApp.Controllers
 
             await _appProductRepository.SaveChangesAsync();
 
-            return CreatedAtRoute("GetProduct", product.ProductId, product);
+            return CreatedAtRoute("GetProduct", new { product.ProductId}, product);
         }
 
         [HttpPut("{productId}")]
@@ -98,7 +98,7 @@ namespace ProductApp.Controllers
             _mapper.Map(productToUpdate, product);
 
             await _appProductRepository.SaveChangesAsync();
-            return CreatedAtRoute("GetProduct", productId, product);
+            return CreatedAtRoute("GetProduct", new{ productId }, product);
 
         }
 

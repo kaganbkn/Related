@@ -1,0 +1,22 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Tags</th>
+      <th scope="col">Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr mdbTableCol *ngFor="let el of products">
+      <th scope="row">{{el.productId}}</th>
+      <td>{{el.name}}</td>
+      <td>{{el.price}}</td>
+      <div *ngFor="let item of el.tags"><td>{{item.value}} <a type="button" class="btn btn-secondary btn-xs" style="margin-right: 10px;" (click)="deleteTag(el.productId,item.tagId,item.value)">X</a></td></div>
+      <td><a type="button" [routerLink]="['/productDetail/' , el.productId]" class="btn btn-secondary mL5" style="margin-right: 10px;" >Edit</a>
+          <a type="button" class="btn btn-secondary mL5" style="margin-right: 10px;" (click)="delete(el.productId,el.name)">Delete</a></td>
+    </tr>
+  </tbody>
+</table>

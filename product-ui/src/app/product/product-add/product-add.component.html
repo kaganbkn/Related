@@ -1,0 +1,33 @@
+<main role="main">
+  <div class="container">
+    <div style="float: left;" class="col-md-6">
+      <form [formGroup]="productAddForm" (ngSubmit)="add()">
+        <h2 class="mt-3 pt-3">Add Product</h2>
+        <div class="form-group">
+          <label>asd</label>
+          <input type="text" id="name" formControlName="name" class="form-control" autofocus>
+          <span style="color:red" class="help-block"
+            *ngIf="productAddForm.get('name').hasError('required') && productAddForm.get('name').touched">Name is
+            required.</span>
+        </div>
+        <div style="color:red" class="form-group">
+          <input type="number" id="price" formControlName="price" class="form-control">
+          <span class="help-block"
+            *ngIf="productAddForm.get('price').hasError('required') && productAddForm.get('price').touched">Price is
+            required.</span>
+        </div>
+        <!--
+
+        <div style="color:red" class="form-group">
+          <input type="text" id="tags" formControlName="tags" class="form-control">
+          <span class="help-block"
+            *ngIf="productAddForm.get('tags').hasError('required') && productAddForm.get('tags').touched">Tag is
+            required.</span>
+        </div>
+
+        -->
+        <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!productAddForm.valid">Add</button>
+      </form>
+    </div>
+  </div>
+</main>

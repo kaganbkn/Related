@@ -8,6 +8,7 @@ namespace ProductApp.DataTransferObjects
 {
     public class ProductOutputDto
     {
+        public Guid ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public ICollection<TagCreationDto> Tags { get; set; } = new List<TagCreationDto>(); //todo: remove

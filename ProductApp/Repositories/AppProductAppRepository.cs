@@ -39,7 +39,7 @@ namespace ProductApp.Repositories
 
         public async Task<Product> GetProductAsync(Guid productId)
         {
-            return await _context.Products.FirstOrDefaultAsync(c => c.ProductId == productId);
+            return await _context.Products.Include(c => c.Tags).FirstOrDefaultAsync(c => c.ProductId == productId);
         }
 
         public async Task<Tag> GetTagAsync(Guid tagId)

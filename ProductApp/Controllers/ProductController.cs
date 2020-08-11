@@ -40,7 +40,7 @@ namespace ProductApp.Controllers
         }
 
         [HttpGet]
-        public List<ProductOutputDto> GetAllProduct([FromQuery] SearchParameters searchParameters)  //todo: removed async
+        public List<ProductOutputDto> GetAllProduct([FromQuery] SearchParameters searchParameters)
         {
 
             var products = _appProductRepository.GetAllProducts();
@@ -103,7 +103,7 @@ namespace ProductApp.Controllers
         }
 
         [HttpDelete("{productId}")]
-        public async Task<IActionResult> DeleteProduct(Guid productId)  // todo:crud
+        public async Task<IActionResult> DeleteProduct(Guid productId)
         {
             var product = await _appProductRepository.GetProductAsync(productId);
 
@@ -117,6 +117,13 @@ namespace ProductApp.Controllers
             await _appProductRepository.SaveChangesAsync();
 
             return NoContent();
+        }
+        
+        [HttpOptions]
+        public IActionResult GetAuthorsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,DELETE,POST,PUT,OPTIONS");
+            return Ok();
         }
     }
 }

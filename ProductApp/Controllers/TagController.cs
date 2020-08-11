@@ -63,5 +63,12 @@ namespace ProductApp.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        public IActionResult GetAuthorsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,DELETE,POST,PUT,OPTIONS");
+            return Ok();
+        }
+
     }
 }

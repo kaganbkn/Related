@@ -8,7 +8,7 @@ using ProductApp.Entities;
 
 namespace ProductApp.Repositories
 {
-    public class AppProductAppRepository : IAppProductRepository //todo: exclude isdeleted parameter for all
+    public class AppProductAppRepository : IAppProductRepository
     {
         private readonly AppDbContext _context;
 

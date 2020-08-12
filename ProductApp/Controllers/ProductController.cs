@@ -36,7 +36,7 @@ namespace ProductApp.Controllers
                 throw new ArgumentNullException(nameof(product),"Product is not found."); // todo : It will be NotFound();
             }
 
-            return _mapper.Map<ProductOutputDto>(product); //todo: remove isdeleted
+            return _mapper.Map<ProductOutputDto>(product);
         }
 
         [HttpGet]

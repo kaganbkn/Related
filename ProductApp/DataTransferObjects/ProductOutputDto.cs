@@ -11,6 +11,6 @@ namespace ProductApp.DataTransferObjects
         public Guid ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public ICollection<TagCreationDto> Tags { get; set; } = new List<TagCreationDto>(); //todo: remove
+        public ICollection<TagCreationDto> Tags { get; set; } = new List<TagCreationDto>();
     }
 }

@@ -82,7 +82,7 @@ namespace ProductApp.Controllers
 
             await _appProductRepository.SaveChangesAsync();
 
-            return CreatedAtRoute("GetProduct", new { product.ProductId}, product);
+            return CreatedAtRoute("GetProduct", new { product.ProductId }, product);
         }
 
         [HttpPut("{productId}")]
@@ -98,7 +98,7 @@ namespace ProductApp.Controllers
             _mapper.Map(productToUpdate, product);
 
             await _appProductRepository.SaveChangesAsync();
-            return CreatedAtRoute("GetProduct", new{ productId }, product);
+            return CreatedAtRoute("GetProduct", new { productId }, product);
 
         }
 
@@ -118,7 +118,7 @@ namespace ProductApp.Controllers
 
             return NoContent();
         }
-        
+
         [HttpOptions]
         public IActionResult GetAuthorsOptions()
         {

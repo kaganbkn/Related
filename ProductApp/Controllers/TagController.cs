@@ -30,7 +30,7 @@ namespace ProductApp.Controllers
 
             if (product == null)
             {
-                throw new ArgumentNullException(nameof(product)); // todo: add custom message
+                return NotFound();
             }
 
             var tagToCreate = _mapper.Map<Tag>(tag);
@@ -39,7 +39,7 @@ namespace ProductApp.Controllers
             tagToCreate.ProductId = productId;
 
             _appProductRepository.AddTag(tagToCreate);
-            
+
             await _appProductRepository.SaveChangesAsync();
 
             return Ok();

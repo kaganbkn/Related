@@ -33,7 +33,7 @@ namespace ProductApp.Controllers
 
             if (product == null)
             {
-                throw new ArgumentNullException(nameof(product)); // todo: add custom message
+                throw new ArgumentNullException(nameof(product),"Product is not found."); // todo : It will be NotFound();
             }
 
             return _mapper.Map<ProductOutputDto>(product); //todo: remove isdeleted
@@ -47,7 +47,7 @@ namespace ProductApp.Controllers
 
             if (!products.Any())
             {
-                throw new ArgumentNullException(nameof(products)); // todo: add custom message //todo:add notfound
+                throw new ArgumentNullException(nameof(products), "Product is not found."); // todo : It will be NotFound();
             }
 
             if (!string.IsNullOrWhiteSpace(searchParameters.Name))
